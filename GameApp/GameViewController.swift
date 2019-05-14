@@ -11,7 +11,10 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
+    @IBOutlet weak var headLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
     let evc = "EndViewController";
+    var gcv : GameScene?;
     override func viewDidLoad() {
         super.viewDidLoad();
         if let view = self.view as! SKView? {
@@ -19,7 +22,8 @@ class GameViewController: UIViewController {
             if let scene = SKScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
-                
+                gcv = scene as! GameScene;
+                gcv!.controller = self;
                 // Present the scene
                 view.presentScene(scene)
             }

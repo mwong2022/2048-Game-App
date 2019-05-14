@@ -4,7 +4,7 @@
 import SpriteKit
 import GameplayKit
 class GameScene: SKScene {
-    var tile = Tile();
+    var controller : GameViewController?
     var tilez = [[Tile]]();
     var score = 0;
     var isFull = true;
@@ -36,7 +36,7 @@ class GameScene: SKScene {
             for b in 0...3 {
                 rows.append(Tile());
                 self.addChild(rows[b].sprite);
-                rows[b].sprite.position = CGPoint(x: (a * 110) - 110, y: (b * 100) - 100);
+                rows[b].sprite.position = CGPoint(x: (a * 110) - 155, y: (b * 100) - 110);
             }
             tilez.append(rows);
         }
@@ -63,6 +63,7 @@ class GameScene: SKScene {
                     tilez[nextA][nextB].setCount(newCount: tilez[nextA][nextB].count * 2);
                     score += tilez[nextA][nextB].count;
                     tilez[nextA + 1][nextB].setCount(newCount: 0);
+                    tileMoved = true;
                 }
             }
         }
@@ -83,6 +84,7 @@ class GameScene: SKScene {
                     tilez[nextA][nextB].setCount(newCount: tilez[nextA][nextB].count * 2);
                     score += tilez[nextA][nextB].count;
                     tilez[nextA - 1][nextB].setCount(newCount: 0);
+                    tileMoved = true;
                 }
             }
         }
@@ -103,6 +105,7 @@ class GameScene: SKScene {
                     tilez[nextA][nextB].setCount(newCount: tilez[nextA][nextB].count * 2);
                     score += tilez[nextA][nextB].count;
                     tilez[nextA][nextB + 1].setCount(newCount: 0);
+                    tileMoved = true;
                 }
             }
         }
@@ -123,6 +126,7 @@ class GameScene: SKScene {
                     tilez[nextA][nextB].setCount(newCount: tilez[nextA][nextB].count * 2);
                     score += tilez[nextA][nextB].count;
                     tilez[nextA][nextB - 1].setCount(newCount: 0);
+                    tileMoved = true;
                 }
             }
         }
@@ -145,33 +149,36 @@ class GameScene: SKScene {
     func isGameOver() -> Bool {
         for x in 0...3 {
             for y in 0...3 {
-                if tile.count == 0 {
+                if tilez[x][y].count == 0 {
+                    print(")")
                     return false;
                 }
                 if x > 0 {
                     if tilez[x][y].count == tilez[x - 1][y].count {
-                        
+                        print(1);
+                        return false
                     }
                 } else if x < 3 {
                     if tilez[x][y].count == tilez[x + 1][y].count {
-                        
+                        print(2);
+                        return false
                     }
                 }
                 if y > 0 {
                     if tilez[x][y].count == tilez[x][y - 1].count {
-                        
+                        print(3);
+                        return false
                     }
                 } else if y < 3 {
                     if tilez[x][y].count == tilez[x][y + 1].count {
-                        
+                        print(4);
+                        return false
                     }
                 }
             }
         }
         return true
     }
-    
-    
     @objc func handleSwipe(sender: UISwipeGestureRecognizer) {
         tileMoved = false;
         if sender.state == .ended {
@@ -183,9 +190,14 @@ class GameScene: SKScene {
             default:
                 break
             }
+            controller!.scoreLabel.text = String(score);
             if tileMoved {
                 spawnTile();
-                print(score)
+                print(score);
+                
+            }
+            if (isGameOver()) {
+                controller?.gameOver();
             }
         }
     }
