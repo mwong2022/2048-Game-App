@@ -11,6 +11,7 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
+    let evc = "EndViewController";
     override func viewDidLoad() {
         super.viewDidLoad();
         if let view = self.view as! SKView? {
@@ -28,6 +29,11 @@ class GameViewController: UIViewController {
             view.showsFPS = true
             view.showsNodeCount = true
         }
+    }
+    func gameOver() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+        let controller = storyboard.instantiateViewController(withIdentifier: evc);
+        self.present(controller, animated: true, completion: nil);
     }
 
     override var shouldAutorotate: Bool {

@@ -28,6 +28,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="80"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FGO-xo-bwC">
+                                <rect key="frame" x="256" y="156" width="11" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -43,12 +50,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-132" y="-78"/>
+            <point key="canvasLocation" x="108" y="-149.77511244377811"/>
+        </scene>
+        <!--EndViewController-->
+        <scene sceneID="Wg9-79-W5f">
+            <objects>
+                <viewController title="EndViewController" id="Dkf-eX-uZF" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oNt-7S-3Bi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="7Gb-Cb-D7E"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TAb-wu-dIv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1023" y="151"/>
         </scene>
         <!--Title View Controller-->
         <scene sceneID="R8y-Dg-gWT">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bi2-LU-tz8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="ggx-bu-TGv" customClass="TitleViewController" customModule="GameApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="l8R-Na-4ji" customClass="TileViewController">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -94,13 +115,13 @@
                         <outlet property="titleLabel" destination="XIS-wR-Fyf" id="OYZ-tF-egc"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bi2-LU-tz8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1106" y="410"/>
+            <point key="canvasLocation" x="-1007" y="383"/>
         </scene>
         <!--Credit View Controller-->
         <scene sceneID="U6N-JI-WNW">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Kpb-g9-YbZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="gvX-gP-e6h" customClass="CreditViewController" customModule="GameApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="V6b-mH-LfZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -130,6 +151,7 @@
                         <outlet property="creditLabel" destination="Dpf-a7-10W" id="8gN-yG-Xmk"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kpb-g9-YbZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="58" y="697"/>
         </scene>

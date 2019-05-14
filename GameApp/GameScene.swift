@@ -6,6 +6,9 @@ import GameplayKit
 class GameScene: SKScene {
     var tile = Tile();
     var tilez = [[Tile]]();
+    var score = 0;
+    var isFull = true;
+    var tileMoved : Bool = false;
     private var label: SKLabelNode?
     private var spinnyNode : SKShapeNode?
     override func didMove(to view: SKView) {
@@ -28,60 +31,136 @@ class GameScene: SKScene {
             newX2 = Int.random(in: 0..<4);
             newY2 = Int.random(in: 0..<4);
         }
-        print(newX1);
-        print(newY1);
-        print(newX2);
-        print(newY2);
         for a in 0...3 {
             var rows = [Tile]();
             for b in 0...3 {
                 rows.append(Tile());
                 self.addChild(rows[b].sprite);
-                rows[b].sprite.position = CGPoint(x: (a * 65) - 65, y: (b * 60) - 60);
+                rows[b].sprite.position = CGPoint(x: (a * 110) - 110, y: (b * 100) - 100);
             }
             tilez.append(rows);
         }
-        tilez[newX1][newY1].sprite.texture = Tile.two;
-        tilez[newX2][newY2].sprite.texture = Tile.two;
+        tilez[newX1][newY1].setCount(newCount: 2);
+        tilez[newX2][newY2].setCount(newCount: 2);
     }
     func moveLeft() {
         for a in 1...3 {
             for b in 0...3 {
+                if tilez[a][b].count == 0 {
+                    continue
+                }
                 var nextA = a - 1;
                 var nextB = b;
-                while tilez[nextA][nextB].sprite.texture == Tile.blank && nextA >= 0{
-                    
-                    print("looping")
-                    let tempTile = tilez[nextA + 1][nextB].sprite.texture;
-                    tilez[nextA][nextB].sprite.texture = tempTile;
-                    tilez[nextA + 1][nextB].sprite.texture = Tile.blank;
+                while  nextA >= 0 && tilez[nextA][nextB].count == 0 {
+                    let tempTile = tilez[nextA + 1][nextB];
+                    tilez[nextA][nextB].setCount(newCount: tempTile.count);
+                    tempTile.setCount(newCount: 0);
                     nextA -= 1
+                    tileMoved = true;
+                }
+                
+                if nextA >= 0 && tilez[nextA][nextB].sprite.texture == tilez[nextA + 1][nextB].sprite.texture {
+                    tilez[nextA][nextB].setCount(newCount: tilez[nextA][nextB].count * 2);
+                    score += tilez[nextA][nextB].count;
+                    tilez[nextA + 1][nextB].setCount(newCount: 0);
                 }
             }
         }
     }
     func moveRight() {
-        for a in 0...2 {
+        for a in stride(from: 2, to: -1, by: -1) {
             for b in 0...3 {
-                
-            }
-        }
-    }
-    func moveUp() {
-        for a in 0...3 {
-            for b in 1...3 {
-                
+                var nextA = a + 1;
+                var nextB = b;
+                while  nextA <= 3 && tilez[nextA][nextB].count == 0 {
+                    let tempTile = tilez[nextA - 1][nextB];
+                    tilez[nextA][nextB].setCount(newCount: tempTile.count);
+                    tilez[nextA - 1][nextB].setCount(newCount: 0);
+                    nextA += 1
+                    tileMoved = true;
+                }
+                if nextA <= 3 && tilez[nextA][nextB].sprite.texture == tilez[nextA - 1][nextB].sprite.texture {
+                    tilez[nextA][nextB].setCount(newCount: tilez[nextA][nextB].count * 2);
+                    score += tilez[nextA][nextB].count;
+                    tilez[nextA - 1][nextB].setCount(newCount: 0);
+                }
             }
         }
     }
     func moveDown() {
         for a in 0...3 {
-            for b in 0...2 {
-                
+            for b in 1...3 {
+                var nextA = a;
+                var nextB = b - 1;
+                while  nextB >= 0 && tilez[nextA][nextB].count == 0 {
+                    let tempTile = tilez[nextA][nextB + 1];
+                    tilez[nextA][nextB].setCount(newCount: tempTile.count);
+                    tempTile.setCount(newCount: 0);
+                    nextB -= 1
+                    tileMoved = true;
+                }
+                if nextB >= 0 && tilez[nextA][nextB].sprite.texture == tilez[nextA][nextB + 1].sprite.texture {
+                    tilez[nextA][nextB].setCount(newCount: tilez[nextA][nextB].count * 2);
+                    score += tilez[nextA][nextB].count;
+                    tilez[nextA][nextB + 1].setCount(newCount: 0);
+                }
             }
         }
     }
+    func moveUp() {
+        for a in 0...3 {
+            for b in stride(from: 3, to: -1, by: -1) {
+                var nextA = a;
+                var nextB = b + 1;
+                while  nextB <= 3 && tilez[nextA][nextB].count == 0 {
+                    let tempTile = tilez[nextA][nextB - 1];
+                    tilez[nextA][nextB].setCount(newCount: tempTile.count);
+                    tilez[nextA][nextB - 1].setCount(newCount: 0);
+                    nextB += 1
+                    tileMoved = true;
+                }
+                if nextB <= 3 && tilez[nextA][nextB].sprite.texture == tilez[nextA][nextB - 1].sprite.texture {
+                    tilez[nextA][nextB].setCount(newCount: tilez[nextA][nextB].count * 2);
+                    score += tilez[nextA][nextB].count;
+                    tilez[nextA][nextB - 1].setCount(newCount: 0);
+                }
+            }
+        }
+    }
+    
+    func spawnTile() {
+        var newNumber = Int.random(in: 0 ..< 3);
+        var newNum1 = Int.random(in: 0 ..< 4);
+        var newNum2 = Int.random(in: 0 ..< 4);
+        var newNum = 2
+        while tilez[newNum1][newNum2].count > 0  {
+            newNum1 = Int.random(in: 0 ..< 4);
+            newNum2 = Int.random(in: 0 ..< 4);
+        }
+        if newNumber == 0 {
+            newNum = 4;
+        }
+        tilez[newNum1][newNum2].setCount(newCount: newNum);
+    }
+    func isGameOver() -> Bool {
+        for x in 0...3 {
+            for y in 0...3 {
+                if tile.count == 0 {
+                    return false;
+                }
+                if x > 0 {
+                    if tile[x][y].count = tile[x - 1][y] {
+                        
+                    }
+                }
+            }
+        }
+        return true
+    }
+    
+    
     @objc func handleSwipe(sender: UISwipeGestureRecognizer) {
+        tileMoved = false;
         if sender.state == .ended {
             switch sender.direction {
             case.right:  moveRight();
@@ -91,8 +170,13 @@ class GameScene: SKScene {
             default:
                 break
             }
+            if tileMoved {
+                spawnTile();
+                print(score)
+            }
         }
     }
+    
     func touchDown(atPoint pos : CGPoint) {
     }
     func touchMoved(toPoint pos : CGPoint) {
