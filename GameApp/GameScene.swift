@@ -149,7 +149,20 @@ class GameScene: SKScene {
                     return false;
                 }
                 if x > 0 {
-                    if tile[x][y].count = tile[x - 1][y] {
+                    if tilez[x][y].count == tilez[x - 1][y].count {
+                        
+                    }
+                } else if x < 3 {
+                    if tilez[x][y].count == tilez[x + 1][y].count {
+                        
+                    }
+                }
+                if y > 0 {
+                    if tilez[x][y].count == tilez[x][y - 1].count {
+                        
+                    }
+                } else if y < 3 {
+                    if tilez[x][y].count == tilez[x][y + 1].count {
                         
                     }
                 }
